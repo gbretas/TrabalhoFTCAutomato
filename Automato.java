@@ -80,6 +80,26 @@ public class Automato {
         return transitions;   
     }
 
+    public boolean transitionsFromStateIsDeterministic(String state_from){
+        boolean isDeterministic = true;
+
+        ArrayList<Transition> transitions = this.getTransitionsFromState(state_from);
+        // System.out.println("Transitions: "+transitions.toString());
+        ArrayList<String> alreadyHaveTransition = new ArrayList<String>();
+
+        for (Transition transition : transitions) {
+            String symbol = transition.getSymbol();
+            // System.out.println("Symbol: "+symbol);
+            if(alreadyHaveTransition.contains(symbol)){
+                isDeterministic = false;
+                break;
+            }else{
+                alreadyHaveTransition.add(symbol);
+            }
+        }
+
+        return isDeterministic;
+    }
 
     // Sets
     public void setInitialState(ArrayList<String> initialStates) {

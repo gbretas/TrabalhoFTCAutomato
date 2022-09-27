@@ -68,9 +68,13 @@ class AutomatosFTC {
                     Automato at = jflap.importAutomatoFromJflap("resources/"+filename);
                     at.loadAlphabet();
 
+                    // System.out.println(at.toString());
+
                     if (at.isAFN()) {
                         System.out.println("É AFN");
                         // Transformar em AFD
+                        ConversorAFN conversor = new ConversorAFN();
+                        conversor.main(at);
                     }else{
 
                         System.out.println("Digite 'fim' para parar de digitar palavras");
