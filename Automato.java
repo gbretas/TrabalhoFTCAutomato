@@ -23,17 +23,8 @@ public class Automato {
         // q1 -> y transicoes
         ArrayList<String> states = this.getStates();
         for (String state : states) {
-            ArrayList<Transition> transitions = this.getTransitionsFromState(state);
-            ArrayList<String> alreadyHaveTransition = new ArrayList<String>();
-
-            for (Transition transition : transitions) {
-                String symbol = transition.getSymbol();
-                if(alreadyHaveTransition.contains(symbol)){
-                    isAFN = true;
-                    return isAFN;
-                }else{
-                    alreadyHaveTransition.add(symbol);
-                }
+            if(transitionsFromStateIsDeterministic(state) == false){
+                isAFN = true;
             }
         }
 
@@ -47,6 +38,11 @@ public class Automato {
     public ArrayList<String> getStates() {
         return states;
     }
+
+    public boolean getState(String state){
+        return states.contains(state);
+    }
+
     public ArrayList<String> getFinalStates() {
         return finalStates;
     }
@@ -55,6 +51,11 @@ public class Automato {
     }
     public ArrayList<Transition> getTransitions() {
         return transitions;
+    }
+
+    public boolean haveState(String state){
+        // System.out.println(states.toString());
+        return states.contains(state);
     }
 
     public boolean isFinalState(String state){
@@ -75,6 +76,19 @@ public class Automato {
         for (Transition transition : this.transitions) {
             if (transition.getFromState().equals(state_from)) {
                 transitions.add(transition);
+            }
+        }
+        return transitions;   
+    }
+
+
+    public ArrayList<Transition> getTransitionsFromStateWithSymbol(String state_from, String simbolo) {
+        ArrayList<Transition> transitions = new ArrayList<Transition>();
+        for (Transition transition : this.transitions) {
+            if (transition.getFromState().equals(state_from)) {
+                if(transition.getSymbol().equals(simbolo)){
+                    transitions.add(transition);
+                }
             }
         }
         return transitions;   

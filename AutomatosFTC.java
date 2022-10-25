@@ -22,13 +22,17 @@ class AutomatosFTC {
 
     public static void menu(){
         // System.out.println("1 - Transformar um automato em um arquivo .jff");
+        System.out.println("Iremos identificar se é AFD ou AFN");
+        System.out.println("Se for AFN, iremos converter para AFD");
+        System.out.println("Se for AFD, iremos simular a entrada");
+        
         System.out.println("1 - Ler um automato em formato .jff");
         System.out.println("5 - Sair");
 
         System.out.print("Digite a opção desejada: ");
 
-        // int option = scanner.nextInt();
-        int option = 1;
+        int option = scanner.nextInt();
+        // int option = 1;
 
         switch (option) {
             case 1:
@@ -55,15 +59,18 @@ class AutomatosFTC {
         
         
         try{
-            // String filename = Digita("Digite o nome do arquivo: ");
-            String filename = "mod3.jff";
+            String filename = Digita("Digite o nome do arquivo: ");
+            // String filename = "AFN.jff";
             File file = new File("resources/"+filename+"");
 
             System.out.println("Arquivo encontrado: "+file.getAbsolutePath());
 
             // Checar se o arquivo existe
             if (file.exists()) {
+
+
                 try{
+
 
                     Automato at = jflap.importAutomatoFromJflap("resources/"+filename);
                     at.loadAlphabet();
@@ -74,7 +81,15 @@ class AutomatosFTC {
                         System.out.println("É AFN");
                         // Transformar em AFD
                         ConversorAFN conversor = new ConversorAFN();
-                        conversor.main(at);
+                        Automato AFD = conversor.main(at);
+
+                        // save in output.jff
+                        jflap.exportAutomatoToJflap(AFD, "output");
+                        System.out.println("Arquivo salvo em resources/out_output.jff");
+
+                        // System.out.println(AFD.toString());
+
+
                     }else{
 
                         System.out.println("Digite 'fim' para parar de digitar palavras");
@@ -89,6 +104,9 @@ class AutomatosFTC {
                         SimuladorAFD simulador = new SimuladorAFD();
                         simulador.main(at, palavras);
                     }
+
+
+
                     
 
 

@@ -25,10 +25,10 @@ public class JFLAPmanager {
             //create folder output if not exists
             File folder = new File("output");
             if (!folder.exists()) {
-                folder.mkdir();
+                // folder.mkdir();
             }
 
-            FileWriter myWriter = new FileWriter("output/"+filename+".jff");
+            FileWriter myWriter = new FileWriter("resources/out_"+filename+".jff");
             myWriter.write(transformAutomatoToJflap(automato));
             myWriter.close();
             System.out.println("Arquivo exportado com sucesso.");
@@ -88,6 +88,7 @@ public class JFLAPmanager {
     // Função principal para importar um automato de um arquivo xml do jflap
     public Automato importAutomatoFromJflap(String path) throws ParserConfigurationException, SAXException, IOException {
 
+        // System.out.println("Importando automato de " + path);
         // Document builder para ler o arquivo xml
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -97,6 +98,9 @@ public class JFLAPmanager {
 
         // Normalizando o documento
         document.getDocumentElement().normalize();
+
+        // System.out.print(document); 
+
 
         // Pegando a tag raiz
         // Element root = document.getDocumentElement();
@@ -117,15 +121,15 @@ public class JFLAPmanager {
                 Boolean finalState = eElement.getElementsByTagName("final").getLength() > 0;
                 
                 // Adicionando o state na lista de states
-                states.add(eElement.getAttribute("name"));
+                states.add(eElement.getAttribute("id"));
                 // Verificando se o estado é inicial
                 if (initial) {
-                    initialStates.add(eElement.getAttribute("name"));
+                    initialStates.add(eElement.getAttribute("id"));
                 }
 
                 // Verificando se o estado é final
                 if (finalState) {
-                    finalStates.add(eElement.getAttribute("name"));
+                    finalStates.add(eElement.getAttribute("id"));
                 }
 
                
@@ -139,16 +143,30 @@ public class JFLAPmanager {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) node;
-                String fromState = states.get(Integer.parseInt(eElement.getElementsByTagName("from").item(0).getTextContent()));
-                String toState = states.get(Integer.parseInt(eElement.getElementsByTagName("to").item(0).getTextContent()));
-                String symbol = eElement.getElementsByTagName("read").item(0).getTextContent();
 
-                //Verificar se estar no alfabeto, se não estiver, adicionar
-                if (!alphabet.contains(symbol)) {
-                    alphabet.add(symbol);
+                try{
+
+
+                    String fromState = eElement.getElementsByTagName("from").item(0).getTextContent();
+                    String toState = eElement.getElementsByTagName("to").item(0).getTextContent();
+                    String symbol = eElement.getElementsByTagName("read").item(0).getTextContent();
+
+                    // Verificar se estar no alfabeto, se não estiver, adicionar
+                    if (!alphabet.contains(symbol)) {
+                        alphabet.add(symbol);
+                    }
+
+                    transitions.add(new Transition(fromState, toState, symbol));
+
+                    // System.out.println(fromState + " " + toState + " " + symbol);
+
+                }catch (Exception e){
+                    System.out.println("Erro: " + e.getMessage());
                 }
 
-                transitions.add(new Transition(fromState, toState, symbol));
+               
+
+
             }
         }
 
@@ -160,6 +178,8 @@ public class JFLAPmanager {
         automato.setInitialState(initialStates); // Adicionando o estado inicial
         automato.setFinalStates(finalStates); // Adicionando os estados finais
         automato.setTransitions(transitions); // Adicionando as transições
+        automato.setAlphabet(alphabet);
+// 
 
         return automato;
     }

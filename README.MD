@@ -4,7 +4,10 @@ Alunos: Gustavo Torres Bretas Alves e Maria Fernanda Guimarães
 Para compilar, use "java AutomatosFTC.java"
 E para executar: use "javac AutomatosFTC"
 
-javac AutomatosFTC.java && java AutomatosFTC && rm *.class
+javac AutomatosFTC.java && java AutomatosFTC
+
+# Arquivo ja compilado em "/build": java -cp Automato.jar AutomatosFTC
+
 
 // 1. um programa converta um AFN qualquer para um AFD equivalente; e
 // 2. um simulador de AFD.
