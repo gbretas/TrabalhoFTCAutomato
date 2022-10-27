@@ -1,25 +1,45 @@
 Trabalho para a matéria Fundamentos de Teoria da Computação
 Alunos: Gustavo Torres Bretas Alves e Maria Fernanda Guimarães
 
+=======================================================================
+## Como compilar
+
 Para compilar, use "java AutomatosFTC.java"
 E para executar: use "javac AutomatosFTC"
 
 javac AutomatosFTC.java && java AutomatosFTC
 
-# Arquivo ja compilado em "/build": java -cp Automato.jar AutomatosFTC
+## Como executar:
 
+Tenha certeza que na pasta principal do projeto, existe uma pasta chamada "resources" e dentro dela, um arquivo chamado "AFN.jff"
 
-// 1. um programa converta um AFN qualquer para um AFD equivalente; e
-// 2. um simulador de AFD.
+e execute o comando;
+```
+java -cp build/Automato.jar AutomatosFTC AFN.jff
+```
 
-// Para tanto, sua primeira implementação (utilizando, preferencialmente, as linguagens C, C++ ou Java)
-// deve receber como entrada um arquivo contendo a descrição de um AFN qualquer. Em seguida, ele
-// deve gerar como saída outro arquivo contendo a descrição do AFD equivalente. Já sua segundo
-// implementação deve receber uma ou mais sentenças e simular o AFD equivalente para determinar se1
-// a(s) sentença(s) pertence(m) ou não à linguagem do AFN. 
+=======================================================================
 
-// - Converte AFN em AFD
-// - Receber uma ou mais sentenças e simular o AFD equivalente para determinar se as sentenças pertencem ou não ao AFN
+## Exemplos de entradas e saídas
 
-// Trabalho para a matéria Fundamentos de Teoria da Computação
-// Alunos: Gustavo Torres Bretas Alves e Maria Fernanda Guimarães
+### Conversão de AFN para AFD
+
+Entrada: java -cp Automato.jar AutomatosFTC AFN.jff
+Saida: Conversão de AFN para AFD
+
+Arquivo exportado com sucesso.
+Arquivo salvo em resources/out_output.jff
+
+### Simulação de AFD
+Entrada: 
+java -cp build/Automato.jar AutomatosFTC out_output.jff < entrada.txt
+
+======================
+Simulação do Automato
+
+A palavra 'a' foi rejeitada
+A palavra 'aa' foi aceita
+A palavra 'aab' foi aceita
+A palavra 'aaabbb' foi aceita
+A palavra 'aaaabbbbb' foi aceita
+A palavra 'abababab' foi rejeitada

@@ -6,9 +6,7 @@ class AutomatosFTC {
     public static String Digita(String mensagem) throws Exception {
         System.out.print(mensagem);
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
-
         String entradaDoTeclado = buff.readLine();
-
         // buff.close();
         return entradaDoTeclado;
     }
@@ -17,41 +15,42 @@ class AutomatosFTC {
         // ToFlap(); // Metodo de exemplo para transformar um automato em um arquivo .jff
         // FromFlap(); // Metodo de exemplo para transformar um arquivo .jff em um automato
         // JFLAPmanager jflap = new JFLAPmanager();
-        menu();
+        menu(args);
     }
 
-    public static void menu(){
+    public static void menu(String[] args){
         // System.out.println("1 - Transformar um automato em um arquivo .jff");
         System.out.println("Iremos identificar se é AFD ou AFN");
         System.out.println("Se for AFN, iremos converter para AFD");
         System.out.println("Se for AFD, iremos simular a entrada");
         
-        System.out.println("1 - Ler um automato em formato .jff");
-        System.out.println("5 - Sair");
+        // System.out.println("1 - Ler um automato em formato .jff");
+        // System.out.println("5 - Sair");
 
-        System.out.print("Digite a opção desejada: ");
+        // System.out.print("Digite a opção desejada: ");
 
-        int option = scanner.nextInt();
+        // int option = scanner.nextInt();
         // int option = 1;
 
-        switch (option) {
-            case 1:
-                readFromJflapFile();
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Opção inválida");
-                break;
-        }
+
+        readFromJflapFile(args);
+        // switch (option) {
+        //     case 1:
+        //         break;
+        //     case 5:
+        //         System.exit(0);
+        //         break;
+        //     default:
+        //         System.out.println("Opção inválida");
+        //         break;
+        // }
 
 
     }
 
 
 
-    static public void readFromJflapFile(){
+    static public void readFromJflapFile(String[] args){
         JFLAPmanager jflap = new JFLAPmanager();
 
         // digite o nome do arquivo, ele deve estar na pasta resources
@@ -59,7 +58,14 @@ class AutomatosFTC {
         
         
         try{
-            String filename = Digita("Digite o nome do arquivo: ");
+            // if not set args[0]
+            String filename;
+            if(args.length == 0){
+               filename = Digita("Digite o nome do arquivo: ");
+            }else{
+                filename = args[0];
+            }
+
             // String filename = "AFN.jff";
             File file = new File("resources/"+filename+"");
 
@@ -94,10 +100,23 @@ class AutomatosFTC {
 
                         System.out.println("Digite 'fim' para parar de digitar palavras");
                         ArrayList<String> palavras = new ArrayList<String>();
-                        String tmpPalavra = Digita("Digite uma palavra: ");
-                        while(!tmpPalavra.equals("fim")){
+                        // String tmpPalavra = Digita("Digite uma palavra: ");
+
+                        // tmpPalavra is read from < input file
+                        // String tmpPalavra = scanner.nextLine();
+
+                        // while(!tmpPalavra.equals("fim")){
+                        //     palavras.add(tmpPalavra);
+                        //     // tmpPalavra = Digita("Digite uma palavra: ");
+                        //     tmpPalavra = scanner.nextLine();
+                        // }
+
+                        while(scanner.hasNextLine()){
+                            String tmpPalavra = scanner.nextLine();
+                            if(tmpPalavra.equals("fim")){
+                                break;
+                            }
                             palavras.add(tmpPalavra);
-                            tmpPalavra = Digita("Digite uma palavra: ");
                         }
 
 

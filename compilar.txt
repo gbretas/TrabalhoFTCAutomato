@@ -1,0 +1,3 @@
+jar cf jar-file Automato.class AutomatosFTC.class ConversorAFN.class JFLAPmanager.class SimuladorAFD.class Transition.class 
+mv jar-file build/Automato.jar
+java -cp Automato.jar AutomatosFTC 
